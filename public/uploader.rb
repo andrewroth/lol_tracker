@@ -95,7 +95,6 @@ def parse(f)
 end
 
 def upload_game_stats(all_stats)
-  @last_game = nil
   all_stats.each_pair do |gid, stats|
     if stats[:gt] == "RANKED_PREMADE_5x5"
       game_id = Net::HTTP.post_form(URI.parse("#{BASE}/games"), {
@@ -139,4 +138,6 @@ end
 Dir["*.log"].each do |file|
   parse file
 end
-`start #{BASE}/games/#{@last_game}/edit`
+if @last_game.present?
+  `start #{BASE}/games/#{@last_game}/edit`
+end
