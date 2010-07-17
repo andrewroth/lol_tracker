@@ -1,7 +1,8 @@
 require 'net/http'
 require 'uri'
 
-BASE = 'http://localhost:3000'
+#BASE = 'http://localhost:3000'
+BASE = 'http://lol.ministryhacks.com'
 
 def parse(f)
   lines = File.read(f).split("\n")
@@ -90,10 +91,12 @@ def parse(f)
 
   puts "FOUND #{stats.keys.length} GAMES"
   puts stats.inspect
-  upload_game_stats stats
+  last_game = upload_game_stats stats
+  `start #{BASE}/games/#{last_game}/edit`
 end
 
 def upload_game_stats(all_stats)
+  last_game = nil
   all_stats.each_pair do |gid, stats|
     if stats[:gt] == "RANKED_PREMADE_5x5"
       game_id = Net::HTTP.post_form(URI.parse("#{BASE}/games"), {
@@ -104,8 +107,10 @@ def upload_game_stats(all_stats)
       upload_team :our_team, stats, game_id
       upload_team :other_team, stats, game_id
       upload_bans stats[:bans], game_id
+      last_game = game_id
     end
   end
+  return last_game
 end
 
 def upload_bans(bans, game_id)
