@@ -91,12 +91,11 @@ def parse(f)
 
   puts "FOUND #{stats.keys.length} GAMES"
   puts stats.inspect
-  last_game = upload_game_stats stats
-  `start #{BASE}/games/#{last_game}/edit`
+  @last_game = upload_game_stats stats
 end
 
 def upload_game_stats(all_stats)
-  last_game = nil
+  @last_game = nil
   all_stats.each_pair do |gid, stats|
     if stats[:gt] == "RANKED_PREMADE_5x5"
       game_id = Net::HTTP.post_form(URI.parse("#{BASE}/games"), {
@@ -107,10 +106,10 @@ def upload_game_stats(all_stats)
       upload_team :our_team, stats, game_id
       upload_team :other_team, stats, game_id
       upload_bans stats[:bans], game_id
-      last_game = game_id
+      @last_game = game_id
     end
   end
-  return last_game
+  return @last_game
 end
 
 def upload_bans(bans, game_id)
@@ -140,3 +139,4 @@ end
 Dir["*.log"].each do |file|
   parse file
 end
+`start #{BASE}/games/#{@last_game}/edit`
