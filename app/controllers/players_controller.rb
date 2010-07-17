@@ -2,7 +2,8 @@ class PlayersController < ApplicationController
   # GET /players
   # GET /players.xml
   def index
-    @players = Player.all
+    @players = Player.all :include => :game_players
+    @players.reject!{ |p| p.game_players.detect{ |gp| gp.team == 'theirs' } }
 
     respond_to do |format|
       format.html # index.html.erb
