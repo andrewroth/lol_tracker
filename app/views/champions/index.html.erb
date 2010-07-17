@@ -1,0 +1,22 @@
+<h1>Listing champions</h1>
+
+<table>
+  <tr>
+    <th>Code</th>
+    <th>Name</th>
+  </tr>
+
+<% @champions.each do |champion| %>
+  <tr>
+    <td><%=h champion.code %></td>
+    <td><%=h champion.name %></td>
+    <td><%= link_to 'Show', champion %></td>
+    <td><%= link_to 'Edit', edit_champion_path(champion) %></td>
+    <td><%= link_to 'Destroy', champion, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New champion', new_champion_path %>

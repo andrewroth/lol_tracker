@@ -1,0 +1,20 @@
+<h1>Editing game_ban</h1>
+
+<% form_for(@game_ban) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :champion_id %><br />
+    <%= f.text_field :champion_id %>
+  </p>
+  <p>
+    <%= f.label :game_id %><br />
+    <%= f.text_field :game_id %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @game_ban %> |
+<%= link_to 'Back', game_bans_path %>

@@ -1,0 +1,22 @@
+<h1>Listing game_bans</h1>
+
+<table>
+  <tr>
+    <th>Champion</th>
+    <th>Game</th>
+  </tr>
+
+<% @game_bans.each do |game_ban| %>
+  <tr>
+    <td><%=h game_ban.champion_id %></td>
+    <td><%=h game_ban.game_id %></td>
+    <td><%= link_to 'Show', game_ban %></td>
+    <td><%= link_to 'Edit', edit_game_ban_path(game_ban) %></td>
+    <td><%= link_to 'Destroy', game_ban, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New game_ban', new_game_ban_path %>
