@@ -1,15 +1,30 @@
 <h1>Editing game</h1>
 
 <% form_for(@game) do |f| %>
-  <%= f.error_messages %>
+  <%= f.error_messages %><%= @your_notes %>
+  <%= hidden_field_tag "rendered_at", DateTime.now.to_s %>
 
+  <table><tr valign="top"><td valign="top">
   <p>
     <%= f.label "General Game Notes" %><br />
     <%= f.text_area :notes %>
   </p>
 
+  <%- @game.our_game_players.each_with_index do |game_player, i| -%>
+    <%- if i == 2 %>
+    </td><td valign="top" style="padding-left: 30px">
+    <%- end -%>
+    <%= label_tag "#{game_player.player.name} played #{game_player.champion.name} (#{game_player.stats})" %><BR/>
+    <%= text_area_tag "player_notes[#{game_player.player.id}]", game_player.player.notes %><BR/>
+    <BR/>
+  <%- end -%>
+
+  </td></tr><tr><td colspan="2">
+  <center>
     <%= f.submit 'Update' %>
-  </p>
+  </center>
+  </tr>
+  </table>
 <% end %>
 
 <%= link_to 'Show', @game %> |

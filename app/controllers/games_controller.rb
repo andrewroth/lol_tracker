@@ -64,10 +64,22 @@ class GamesController < ApplicationController
   # PUT /games/1.xml
   def update
     @game = Game.find(params[:id])
+    rendered_at = DateTime.parse(params[:rendered_at])
+    @your_notes = ""
+    params[:player_notes].each_pair do |id, notes|
+      p = Player.find id
+      if p.updated_at > rendered_at
+        @game.errors.add_to_base "Player #{p.name} notes was updated between when you loaded the page and now!  Merge your notes with the new notes."
+        @your_notes += "Your notes for #{p.name} were: <pre>#{notes}</pre><BR/>"
+      else
+        p.notes = notes
+        p.save!
+      end
+    end
 
     respond_to do |format|
-      if @game.update_attributes(params[:game])
-        format.html { redirect_to(@game, :notice => 'Game was successfully updated.') }
+      if !@game.errors.present? && @game.update_attributes(params[:game])
+        format.html { redirect_to(games_url, :notice => 'Game was successfully updated.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

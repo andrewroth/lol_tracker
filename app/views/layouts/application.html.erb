@@ -1,5 +1,16 @@
-<%= link_to "Players", players_url %>
-<%= link_to "Games", games_url %>
-<HR/>
+<HTML>
+  <HEAD>
+    <%= stylesheet_link_tag("main") %>
+  </HEAD>
+  <BODY>
+    <%= link_to "Players", players_url %> |
+    <%= link_to "Games", games_url %> |
+    <%= link_to "Champions", champions_url %> |
+    <%= link_to "Uploader", :controller => 'uploader' %>
 
-<%= yield %>
+    <HR/>
+
+    <%= flash[:notice] %>
+    <%= yield %>
+  </BODY>
+</HTML>

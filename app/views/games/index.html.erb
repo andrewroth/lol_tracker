@@ -14,11 +14,10 @@
   <tr>
     <td><%=h game.game_id %></td>
     <td><%=h game.played_at %></td>
-    <td><%=h game.our_players.collect(&:name).join(", ") %></td>
+    <td><%=h link_to game.our_players.collect(&:name).join(", "), edit_game_path(game) %></td>
     <td><%=h game.their_players.collect(&:name).join(", ") %></td>
     <td><%=h game.win ? "win" : "loss" %></td>
     <td><%=h game.bans.collect(&:name).join(", ") %></td>
-    <td><%= link_to 'Show', game %></td>
     <td><%= link_to 'Edit', edit_game_path(game) %></td>
     <td><%= link_to 'Destroy', game, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
