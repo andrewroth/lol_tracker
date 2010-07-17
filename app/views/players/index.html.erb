@@ -4,12 +4,18 @@
   <tr>
     <th>Name</th>
     <th>Notes</th>
+    <th>Wins</th>
+    <th>Losses</th>
+    <th>Win %</th>
   </tr>
 
 <% @players.each do |player| %>
   <tr>
     <td><%=h player.name %></td>
     <td><%=h player.notes %></td>
+    <td><%=h player.wins %></td>
+    <td><%=h player.losses %></td>
+    <td><%=h player.human_win_percent %></td>
     <td><%= link_to 'Show', player %></td>
     <td><%= link_to 'Edit', edit_player_path(player) %></td>
   </tr>
