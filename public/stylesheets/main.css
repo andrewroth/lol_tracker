@@ -37,21 +37,23 @@ table tr td, th{
   padding: 2px;
 }
 
-a:link{
+table.linktable tr:hover {
+  background-color: #AA9999;
+}
+
+a:link {
   font-family: arial, monospace;
   text-decoration: none;
   color: teal;
 }
 
-a:hover{
+a:hover {
   font-family: arial, monospace;
   text-decoration: underline;
 }
 
-a:visited{
+a:visited {
   font-family: arial, monospace;
   color: purple;
   text-decoration: none;
 }
-
-

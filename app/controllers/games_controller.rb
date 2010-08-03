@@ -2,7 +2,10 @@ class GamesController < ApplicationController
   # GET /games
   # GET /games.xml
   def index
-    @games = Game.all :order => "played_at DESC"
+    @games = params[:search] ||= {}
+    @games = params[:search][:order] ||= 'descend_by_played_at'
+    @search = Game.search params[:search]
+    @games = @search.all
 
     respond_to do |format|
       format.html # index.html.erb

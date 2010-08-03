@@ -2,9 +2,26 @@ class PlayersController < ApplicationController
   # GET /players
   # GET /players.xml
   def index
-    @players = Player.all :include => :game_players
+    @players = params[:search] ||= {}
+    @players = params[:search][:order] ||= 'ascend_by_name'
+    @search = Player.search params[:search]
+    @players = @search.all
     #@players.reject!{ |p| p.game_players.detect{ |gp| gp.team == 'theirs' } }
     @players = @players.find_all{ |p| p.game_players.detect{ |gp| gp.team == 'ours' } }
+
+    if params[:search][:order] == 'ascend_by_wins'
+      @players.sort!{ |p1, p2| p1.wins <=> p2.wins }
+    elsif params[:search][:order] == 'descend_by_wins'
+      @players.sort!{ |p1, p2| p2.wins <=> p1.wins }
+    elsif params[:search][:order] == 'ascend_by_losses'
+      @players.sort!{ |p1, p2| p1.losses <=> p2.losses }
+    elsif params[:search][:order] == 'descend_by_losses'
+      @players.sort!{ |p1, p2| p2.losses <=> p1.losses }
+    elsif params[:search][:order] == 'ascend_by_win_percent'
+      @players.sort!{ |p1, p2| p1.win_percent_f <=> p2.win_percent_f }
+    elsif params[:search][:order] == 'descend_by_win_percent'
+      @players.sort!{ |p1, p2| p2.win_percent_f <=> p1.win_percent_f }
+    end
 
     respond_to do |format|
       format.html # index.html.erb

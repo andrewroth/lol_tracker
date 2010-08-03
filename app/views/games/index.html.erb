@@ -2,12 +2,12 @@
 
 <table>
   <tr>
-    <th>Game ID</th>
-    <th>Game Type</th>
-    <th>Played At</th>
+    <th><%= order(@search, :by => "game_id", :as => "Game ID") %></th>
+    <th><%= order(@search, :by => "game_type") %></th>
+    <th><%= order(@search, :by => "played_at") %></th>
     <th>Our Team</th>
     <th>Their Team</th>
-    <th>Result</th>
+    <th><%= order(@search, :by => "win", :as => "Result") %></th>
     <th>Bans</th>
   </tr>
 

@@ -2,11 +2,11 @@
 
 <table>
   <tr>
-    <th>Name</th>
-    <th>Wins</th>
-    <th>Losses</th>
-    <th>Win %</th>
-    <th>Notes</th>
+    <th><%= order(@search, :by => :name) %></th>
+    <th><%= order(@search, :by => :wins) %></th>
+    <th><%= order(@search, :by => :losses) %></th>
+    <th><%= order(@search, :by => :win_percent, :as => "Win %") %></th>
+    <th><%= order(@search, :by => :notes) %></th>
   </tr>
 
 <% @players.each do |player| %>
